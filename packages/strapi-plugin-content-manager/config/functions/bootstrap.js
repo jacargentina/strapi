@@ -291,6 +291,15 @@ module.exports = async cb => {
       // Update the displayed fields
       const updatedListDisplay = prevListDisplay.filter(obj => obj.name !== currentAttr.join());
 
+      // Retrieve the model's displayed fields for the `EditPage`
+      const fieldsPath = getEditDisplayFieldsPath(attrPath);
+      // Retrieve the previous settings
+      const prevEditDisplayFields = _.get(prevSchema.models, fieldsPath);
+      // Update the fields
+      const updatedEditDisplayFields = prevEditDisplayFields.filter(field => field !== currentAttr.join());
+     // Set the new layout
+      _.set(prevSchema.models, fieldsPath, updatedEditDisplayFields);
+
       if (updatedListDisplay.length === 0) {
         // Update it with the one from the generated schema
         _.set(prevSchema.models, listDisplayPath, _.get(schema.models, listDisplayPath, []));
@@ -331,9 +340,10 @@ module.exports = async cb => {
 
     // Update other keys
     sameApis.map(apiPath => {
+
       // This doesn't keep the prevSettings for the relations,  the user will have to reset it.
       // We might have to improve this if we want the order of the relations to be kept
-      const keysToUpdate = ['relations', 'loadedModel', 'associations', 'attributes', ['editDisplay', 'relations']].map(key => apiPath.concat(key));
+      const keysToUpdate = ['relations', 'loadedModel', 'associations', 'attributes', ['editDisplay', 'relations'], ['editDisplay', 'fields']].map(key => apiPath.concat(key));
 
       keysToUpdate.map(keyPath => {
         const newValue = _.get(schema.models, keyPath);
