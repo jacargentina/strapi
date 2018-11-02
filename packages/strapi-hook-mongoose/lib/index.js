@@ -326,10 +326,11 @@ module.exports = function (strapi) {
                 definition.loadedModel[name].type = utils(instance).convertType(details.type);
               }
 
+              const customKey = details.model ? (details.plugin ? strapi.plugins[details.plugin].models[details.model].attributes['_id'] : strapi.models[details.model].attributes["_id"]) : null;
+
               switch (verbose) {
                 case 'hasOne': {
                   const ref = details.plugin ? strapi.plugins[details.plugin].models[details.model].globalId : strapi.models[details.model].globalId;
-                  const customKey = details.plugin ? strapi.plugins[details.plugin].models[details.model].attributes['_id'] : strapi.models[details.model].attributes["_id"];
                   const keyType = customKey ? utils(instance).convertType(customKey.type) : instance.Schema.Types.ObjectId;
 
                   definition.loadedModel[name] = {
@@ -353,7 +354,6 @@ module.exports = function (strapi) {
                     // Set this info to be able to see if this field is a real database's field.
                     details.isVirtual = true;
                   } else {
-                    const customKey = details.plugin ? strapi.plugins[details.plugin].models[details.model].attributes['_id'] : strapi.models[details.model].attributes["_id"];
                     const keyType = customKey ? utils(instance).convertType(customKey.type) : instance.Schema.Types.ObjectId;
                     definition.loadedModel[name] = [{
                       type: keyType,
@@ -377,7 +377,6 @@ module.exports = function (strapi) {
                     // Set this info to be able to see if this field is a real database's field.
                     details.isVirtual = true;
                   } else {
-                    const customKey = details.plugin ? strapi.plugins[details.plugin].models[details.model].attributes['_id'] : strapi.models[details.model].attributes["_id"];
                     const keyType = customKey ? utils(instance).convertType(customKey.type) : instance.Schema.Types.ObjectId;
                     definition.loadedModel[name] = {
                       type: keyType,
@@ -402,7 +401,6 @@ module.exports = function (strapi) {
                     // Set this info to be able to see if this field is a real database's field.
                     details.isVirtual = true;
                   } else {
-                    const customKey = details.plugin ? strapi.plugins[details.plugin].models[details.model].attributes['_id'] : strapi.models[details.model].attributes["_id"];
                     const keyType = customKey ? utils(instance).convertType(customKey.type) : instance.Schema.Types.ObjectId;
                     definition.loadedModel[name] = [{
                       type: keyType,
