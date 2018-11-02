@@ -29,11 +29,10 @@ module.exports = {
    */
 
   findOne: async (ctx) => {
-    if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) {
+    const one = await strapi.services.blog.fetch(ctx.params);
+    if (!one)
       return ctx.notFound();
-    }
-
-    return strapi.services.<%= id %>.fetch(ctx.params);
+    return one;
   },
 
   /**
