@@ -1,17 +1,19 @@
 {
-  "name": "strapi-upload-local",
-  "version": "3.0.0-alpha.14.5",
-  "description": "Local provider for strapi upload",
+  "name": "strapi-provider-email-sendmail",
+  "version": "3.0.0-alpha.15",
+  "description": "Sendmail provider for strapi email",
   "homepage": "http://strapi.io",
   "keywords": [
-    "upload",
+    "email",
     "strapi"
   ],
   "directories": {
     "lib": "./lib"
   },
   "main": "./lib",
-  "dependencies": {},
+  "dependencies": {
+    "sendmail": "^1.2.0"
+  },
   "strapi": {
     "isProvider": true
   },
