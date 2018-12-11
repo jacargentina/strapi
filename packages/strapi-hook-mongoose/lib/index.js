@@ -18,7 +18,6 @@ const { models: utilsModels }  = require('strapi-utils');
 
 // Local helpers.
 const utils = require('./utils/');
-const _utils = utils();
 
 const relations = require('./relations');
 
@@ -541,13 +540,6 @@ module.exports = function (strapi) {
       }
 
       return result;
-    },
-
-    postProcessValue: (value) => {
-      if (_.isArray(value)) {
-        return value.map(_utils.valueToId);
-      }
-      return _utils.valueToId(value);
     }
   }, relations);
 
