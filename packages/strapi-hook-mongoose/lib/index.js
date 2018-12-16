@@ -97,7 +97,7 @@ module.exports = function (strapi) {
             'config',
             'functions',
             'mongoose.js'
-          ))(instance, strapi.connections[connectionName]);
+          ))(instance, connection);
         } catch (err) {
           // This is not an error if the file is not found.
         }
