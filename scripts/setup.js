@@ -117,6 +117,7 @@ watcher(
 watcher('📦  Linking strapi...', 'npm link');
 
 shell.cd('../strapi-plugin-graphql');
+watcher('', 'npm install ../strapi-utils');
 watcher('📦  Linking strapi-plugin-graphql...', 'npm link --no-optional', false);
 
 // Plugin services
@@ -136,6 +137,7 @@ shell.cd('../strapi-plugin-email');
 shell.rm('-f', 'package-lock.json');
 watcher('', 'npm install ../strapi-helper-plugin --no-optional');
 watcher('', 'npm install ../strapi-provider-email-sendmail --no-optional');
+watcher('', 'npm install ../strapi-utils --no-optional');
 watcher('📦  Linking strapi-plugin-email...', 'npm link --no-optional', false);
 
 shell.cd('../strapi-plugin-users-permissions');
@@ -146,6 +148,7 @@ watcher('📦  Linking strapi-plugin-users-permissions...', 'npm link --no-optio
 
 shell.cd('../strapi-plugin-content-manager');
 watcher('', 'npm install ../strapi-helper-plugin --no-optional');
+watcher('', 'npm install ../strapi-utils --no-optional');
 shell.rm('-f', 'package-lock.json');
 watcher('📦  Linking strapi-plugin-content-manager...', 'npm link --no-optional', false);
 
@@ -158,6 +161,7 @@ watcher('📦  Linking strapi-plugin-settings-manager...', 'npm link --no-option
 shell.cd('../strapi-plugin-upload');
 watcher('', 'npm install ../strapi-helper-plugin --no-optional');
 watcher('', 'npm install ../strapi-provider-upload-local --no-optional');
+watcher('', 'npm install ../strapi-utils --no-optional');
 shell.rm('-f', 'package-lock.json');
 watcher('📦  Linking strapi-plugin-upload...', 'npm link --no-optional', false);
 

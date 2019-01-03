@@ -37,9 +37,15 @@ Find products having a price equal or greater than `3`.
 
 `GET /products?price_gte=3`
 
-::: note
-You can't use filter to have specific results inside relation, like "Find users and only their posts older than yesterday" as example. If you need it, you can modify or create your own service or use [GraphQL](./graphql.md#query-api).
-:::
+#### Relations
+ You can also use filters into a relation attribute which will be applied to the first level of the request.
+ Find users having written a post named `Title`.
+ `GET /users?posts.name=Title`
+ Find posts written by a user having more than 12 years old.
+ `GET /posts?author.age_gt=12`
+ Find posts written by a user belongs to strapi company.
+ `GET /posts?author.company.name=strapi`
+ > Note: You can't use filter to have specific results inside relation, like "Find users and only their posts older than yesterday" as example. If you need it, you can modify or create your own service ou use [GraphQL](./graphql.md#query-api).
 
 ::: warning
 This filter isn't available for `upload` plugin.
