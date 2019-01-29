@@ -18,8 +18,11 @@ const { models: utilsModels }  = require('strapi-utils');
 
 // Local helpers.
 const utils = require('./utils/');
+const _utils = utils();
 
 const relations = require('./relations');
+const { Query } = require('./query');
+const { Converter } = require('./converter');
 
 /**
  * Mongoose hook
@@ -131,7 +134,6 @@ module.exports = function (strapi) {
 
                 /*
                   Override populate path for polymorphic association.
-
                   It allows us to make Upload.find().populate('related')
                   instead of Upload.find().populate('related.item')
                 */
@@ -540,8 +542,19 @@ module.exports = function (strapi) {
       }
 
       return result;
-    }
+    },
+
+    postProcessValue: (value) => {
+      if (_.isArray(value)) {
+        return value.map(item => _utils.valueToId(item));
+      }
+      return _utils.valueToId(value);
+    },
+
+    Query,
+    Converter,
   }, relations);
 
   return hook;
 };
+

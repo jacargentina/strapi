@@ -386,56 +386,16 @@ module.exports = {
             if (association.type === 'model') {
               params.id = _.get(obj, [association.alias, ref.primaryKey], obj[association.alias]);
             } else {
-              // Apply optional arguments to make more precise nested request.
-              const convertedParams = strapi.utils.models.convertParams(
-                name,
-                Query.convertToParams(Query.amountLimiting(options)),
-              );
-              const where = strapi.utils.models.convertParams(
-                name,
-                options.where || {},
+              queryOpts.params = Query.amountLimiting(options);
+              queryOpts.query = Object.assign(
+                {},
+                Query.convertToParams(_.omit(queryOpts.params, 'where')),
+                Query.convertToQuery(queryOpts.params.where)
               );
 
-              // Limit, order, etc.
-              Object.assign(queryOpts, convertedParams);
-
-              // Skip.
-              queryOpts.skip = convertedParams.start;
-
-              switch (association.nature) {
-                case "manyToMany": {
-                  const arrayOfIds = (obj[association.alias] || []).map(
-                    related => {
-                      return related[ref.primaryKey] || related;
-                    }
-                  );
-
-                  // Where.
-                  queryOpts.query = strapi.utils.models.convertParams(name, {
-                    // Construct the "where" query to only retrieve entries which are
-                    // related to this entry.
-                    [ref.primaryKey]: arrayOfIds,
-                    ...where.where,
-                  }).where;
-                  break;
-                }
-                default:
-                  // Where.
-                  queryOpts.query = strapi.utils.models.convertParams(name, {
-                    // Construct the "where" query to only retrieve entries which are
-                    // related to this entry.
-                    [association.via]: obj[ref.primaryKey],
-                    ...where.where,
-                  }).where;
-              }
-            }
-
-            if (queryOpts.hasOwnProperty('query') &&
-              queryOpts.query.hasOwnProperty('id') &&
-              queryOpts.query.id.hasOwnProperty('value') &&
-              Array.isArray(queryOpts.query.id.value)
-            ){
-              queryOpts.query.id.symbol = 'IN';
+              // Construct the "where" query to only retrieve entries which are
+              // related to this entry.
+              _.set(queryOpts, ['query', association.via], obj[ref.primaryKey]);
             }
 
             const value = await (association.model

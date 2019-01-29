@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const { map } = require('async'); // eslint-disable-line import/order
-const { setWith, merge, get, difference, intersection, isObject, isFunction } = require('lodash');
+const { setWith, merge, get, difference, intersection, isFunction, isPlainObject } = require('lodash');
 const os = require('os');
 const vm = require('vm');
 const fetch = require('node-fetch');
@@ -38,10 +38,11 @@ module.exports = {
     // Load value.
     const value = loader(path);
     // Merge doesn't work for none-object value and function.
-    const obj = isObject(value) && !isFunction(value) ? merge(get(ctx, objPath), value) : value;
+    const obj = isPlainObject(value) && !isFunction(value) ? merge(get(ctx, objPath), value) : value;
+    const customizer = isPlainObject(value) ? Object : undefined;
 
     // Assignation.
-    return setWith(ctx, objPath, obj, Object);
+    return setWith(ctx, objPath, obj, customizer);
   },
 
   setConfigAdmin: function(ctx, path, type, loader) {
