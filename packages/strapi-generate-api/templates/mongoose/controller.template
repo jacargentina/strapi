@@ -29,10 +29,10 @@ module.exports = {
    */
 
   findOne: async (ctx) => {
-    const data = await strapi.services.<%= id %>.fetch(ctx.params);
-    if (!data)
+    const one = await strapi.services.blog.fetch(ctx.params);
+    if (!one)
       return ctx.notFound();
-    return data;
+    return one;
   },
 
   /**
