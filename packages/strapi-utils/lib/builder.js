@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const getFilterKey = (key) => {
-  const matched = key.match(/_?(sort|limit|start)/);
+  const matched = key.match(/^_?(sort|limit|start)$/);
   if (matched) {
     return matched[1];
   }
@@ -9,7 +9,7 @@ const getFilterKey = (key) => {
 };
 
 const getOperatorKey = (key) => {
-  const matched = key.match(/(.*)_(neq?|lte?|gte?|containss?|n?in|exists)/);
+  const matched = key.match(/(.*)_(neq?|lte?|gte?|containss?|n?in|exists)$/);
   if (matched) {
     return matched.slice(1);
   }
