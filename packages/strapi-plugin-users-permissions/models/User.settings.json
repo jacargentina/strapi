@@ -18,10 +18,6 @@
       "configurable": false,
       "required": true
     },
-    "provider": {
-      "type": "string",
-      "configurable": false
-    },
     "password": {
       "type": "password",
       "minLength": 6,
@@ -43,11 +39,20 @@
       "default": false,
       "configurable": false
     },
+    "avatar": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload"
+    },
     "role": {
       "model": "role",
       "via": "users",
       "plugin": "users-permissions",
       "configurable": false
+    },
+    "blogs": {
+      "collection": "blog",
+      "via": "author"
     }
   }
 }
